@@ -1,6 +1,7 @@
 # Engineer-RJC
 
 Engineer-RJC
+
 Hello everyone, I am Renefred Jean Charles
 
 I started taking programimg classes a year ago and I've decide to revise all of my coding exercise and projects to refresh my knowledge and improve my skills. I am also open to new challenges as I'm committed to lifelong learning. 
