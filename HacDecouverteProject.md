@@ -12,4 +12,6 @@ First we have the html file that we use to do the table with the information. Th
 
 There's also a logo that allow to display the information on the chart. 
 
+We use GHemini, ARIA AI and ChatGPT to help polish the code and cut time.
+
 
