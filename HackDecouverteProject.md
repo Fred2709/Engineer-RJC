@@ -11,10 +11,10 @@ There's a graph that allow them to vizualize the types, names and, the time it t
 
 First we have the html file that we use to do the data entry. There are the name of the food places, the types, the address, the timing on bike, on feet, on car, on bus, different openning and closing time on week day, There's a filter button that allow us to apply the filter.
 
-There's also a logo that allow to display the information on the chart. 
+There's also a logo or button that allow to display the information on the chart. 
 
 
-We wanted to be able to add a filter for the price range, for the star rating, if it is opened now or not, and if it is wheelchair accessible. 
+We wanted to be able to add a filter for the price range, for the star rating, if it is opened now or not, and if the wheelchair is accessible. 
 We also wanted to make it so the filters could rearange the list of all the restaurants.
 but sadly our javascript experience didn't allow us to get the filters
 
