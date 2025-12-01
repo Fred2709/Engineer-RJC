@@ -1,5 +1,5 @@
 Hello 
-This Mathis and Fred
+This is Mathis and Fred
 We worked together on this project.
 
 This a website that provide a list of food places available around the Jhon Molson campus of University Concordia for student that would like to have their meal outside of the campus, 
@@ -19,7 +19,7 @@ but sadly our javascript experience didn't allow us to get the filters
 
 However we are able to make it in French and English.
 
-We used Gemini, ARIA AI and ChatGPT to help polish the code, for translation and cut time.
+We used Gemini, ARIA AI and ChatGPT to help polish the code, for translation and cutting time.
 
 
 
