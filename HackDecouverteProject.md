@@ -9,7 +9,7 @@ They can see what types it is. They might want to have indian food, fast food, c
 
 There's a graph that allow them to vizualize the types, names and, the time it takes to go there in different way( on bus, on feet, on car, and on bike).
 
-First we have the html file that we use to do the data entry. There are the name of the food places, the types, the address, the timing on bike, on feet, on car, on bus, different openning and closing time on week day, There's a filter button that allow us to do filters to apply the filter.
+First we have the html file that we use to do the data entry. There are the name of the food places, the types, the address, the timing on bike, on feet, on car, on bus, different openning and closing time on week day, There's a filter button that allow us to apply the filter.
 
 There's also a logo that allow to display the information on the chart. 
 
