@@ -1,0 +1,59 @@
+This the AI Script. I did not need modification
+
+#!/bin/bash
+
+echo "Starting basic Ubuntu security setup..."
+
+# -------------------------------
+# 1. Update and upgrade system
+# -------------------------------
+echo "Updating system..."
+sudo apt update && sudo apt upgrade -y
+
+# -------------------------------
+# 2. Enable firewall (UFW)
+# -------------------------------
+echo "Configuring firewall..."
+sudo apt install ufw -y
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (important so you don’t get locked out)
+sudo ufw allow ssh
+
+# Enable firewall
+sudo ufw enable
+
+# -------------------------------
+# 3. Install Fail2Ban (brute force protection)
+# -------------------------------
+echo "Installing Fail2Ban..."
+sudo apt install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+
+# -------------------------------
+# 4. Automatic security updates
+# -------------------------------
+echo "Installing unattended upgrades..."
+sudo apt install unattended-upgrades -y
+sudo dpkg-reconfigure -plow unattended-upgrades
+
+# -------------------------------
+# 5. Remove unused packages
+# -------------------------------
+echo "Cleaning unused packages..."
+sudo apt autoremove -y
+
+# -------------------------------
+# 6. Check open ports
+# -------------------------------
+echo "Checking open ports..."
+sudo ss -tuln
+
+# -------------------------------
+# 7. Basic password policy reminder
+# -------------------------------
+echo "Make sure to use strong passwords!"
+
+echo "Security setup completed."
