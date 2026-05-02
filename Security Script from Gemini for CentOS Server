@@ -1,1 +1,53 @@
+#!/bin/bash
 
+# --- 1. Update System ---
+echo "Updating system packages..."
+yum update -y && yum upgrade -y
+
+# --- 2. Configure Firewall (Firewalld) ---
+echo "Configuring Firewalld..."
+systemctl start firewalld
+systemctl enable firewalld
+
+# Allow SSH and standard web traffic
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+
+# Reload to apply changes
+firewall-cmd --reload
+
+# --- 3. SSH Hardening ---
+echo "Hardening SSH configuration..."
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+# Disable Root Login over SSH
+sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+
+# Disable Password Authentication (Optional: Only if using SSH Keys)
+# sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+systemctl restart sshd
+
+# --- 4. Install & Configure Fail2Ban ---
+echo "Installing Fail2Ban to prevent brute force..."
+yum install epel-release -y
+yum install fail2ban -y
+
+# Enable Fail2Ban for SSH
+cat <<EOF > /etc/fail2ban/jail.local
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/secure
+maxretry = 5
+bantime = 1h
+EOF
+
+systemctl enable fail2ban
+systemctl start fail2ban
+
+# --- 5. Clean up ---
+echo "Security script complete. Please ensure you have a non-root user with sudo access!"
