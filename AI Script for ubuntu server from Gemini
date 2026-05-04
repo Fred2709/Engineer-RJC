@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# --- Configuration Variables ---
+SSH_PORT=22                 # Change this to a custom port if desired
+SUDO_USER="your_username"   # Ensure this user exists before running!
+
+echo "--- Starting Ubuntu Server Hardening ---"
+
+# 1. Update System
+echo "[*] Updating package lists and upgrading system..."
+apt update && apt upgrade -y && apt dist-upgrade -y
+apt autoremove -y
+
+# 2. Configure Firewall (UFW)
+echo "[*] Configuring UFW..."
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow $SSH_PORT/tcp
+ufw allow 80/tcp
+ufw allow 443/tcp
+echo "y" | ufw enable
+
+# 3. Secure SSH
+echo "[*] Hardening SSH configuration..."
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+# Disable root login and password authentication
+sed -i "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
+sed -i "s/PermitRootLogin yes/PermitRootLogin no/" /etc/ssh/sshd_config
+sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
+systemctl restart ssh
+
+# 4. Install Fail2Ban (Protects against Brute Force)
+echo "[*] Installing and starting Fail2Ban..."
+apt install fail2ban -y
+systemctl enable fail2ban
+systemctl start fail2ban
+
+# 5. Disable IPv6 (Optional - reduces attack surface if not used)
+echo "[*] Disabling IPv6..."
+echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.conf
+sysctl -p
+
+# 6. Automatic Security Updates
+echo "[*] Enabling unattended-upgrades..."
+apt install unattended-upgrades -y
+dpkg-reconfigure -plow unattended-upgrades
+
+echo "--- Hardening Complete. Please reboot the server. ---"
