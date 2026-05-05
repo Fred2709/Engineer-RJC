@@ -1,0 +1,50 @@
+#!/bin/bash
+
+echo "Starting system hardening..."
+
+# ----------------------------
+# Update system
+# ----------------------------
+echo "Updating system..."
+yum update -y
+
+# ----------------------------
+# Install security tools
+# ----------------------------
+echo "Installing security tools..."
+yum install -y epel-release
+yum install -y fail2ban firewalld vim
+
+# ----------------------------
+# Start and enable firewall
+# ----------------------------
+echo "Configuring firewall..."
+systemctl start firewalld
+systemctl enable firewalld
+
+# Allow SSH service
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --reload
+
+# ----------------------------
+# Create a new user
+# ----------------------------
+echo "Creating a new user..."
+read -p "Enter new username: " newuser
+adduser $newuser
+passwd $newuser
+
+# Add user to sudo group
+usermod -aG wheel $newuser
+
+
+# ----------------------------
+# Set basic permissions
+# ----------------------------
+echo "Setting permissions..."
+chmod 700 /root
+
+# ----------------------------
+# Finish
+# ----------------------------
+echo "Security setup complete!"
